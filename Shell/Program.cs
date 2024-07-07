@@ -13,12 +13,20 @@ internal class Program {
             case "exit":
                 HandleExit(command);
                 break;
+            case "echo":
+                HandleEcho(command);
+                break;
             default:
                 CommandNotFound(command);
                 break;
         }
 
         Run();
+    }
+
+    private static void HandleEcho(string[] command) {
+        var message = string.Join(" ", command.Skip(1));
+        Console.WriteLine(message);
     }
 
     private static void HandleExit(string[] command) {
