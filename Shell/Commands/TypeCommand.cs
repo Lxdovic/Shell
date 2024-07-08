@@ -22,7 +22,8 @@ internal sealed class TypeCommand : BuiltinCommand {
     }
 
     private static bool TryFindInPath(string command, out string filePath) {
-        var paths = Environment.GetEnvironmentVariable("PATH")?.Split(';');
+        var paths = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator);
+
         if (paths == null) {
             filePath = string.Empty;
             return false;
@@ -30,8 +31,8 @@ internal sealed class TypeCommand : BuiltinCommand {
 
         foreach (var path in paths) {
             if (!Directory.Exists(path)) continue;
-
-            var files = Directory.GetFiles(path, $"{command}.exe");
+            
+            var files = Directory.GetFiles(path, $"{command}");
             if (files.Length > 0) {
                 filePath = files[0];
                 return true;
